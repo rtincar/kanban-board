@@ -1,4 +1,4 @@
-package io.rtincar.accont
+package io.rtincar.account
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName

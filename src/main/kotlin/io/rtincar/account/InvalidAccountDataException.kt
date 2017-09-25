@@ -1,3 +1,3 @@
-package io.rtincar.accont
+package io.rtincar.account
 
 class InvalidAccountDataException(message: String?) : RuntimeException(message)

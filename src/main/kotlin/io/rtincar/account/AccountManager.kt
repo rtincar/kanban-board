@@ -1,4 +1,4 @@
-package io.rtincar.accont
+package io.rtincar.account
 
 class AccountManager(private val accountStore: AccountStore) {
 
