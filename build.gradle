@@ -2,7 +2,7 @@ group 'io.rtincar'
 version '0.1'
 
 buildscript {
-    ext.kotlin_version = '1.1.4'
+    ext.kotlin_version = '1.1.50'
 
     repositories {
         mavenCentral()
