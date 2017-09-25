@@ -1,4 +1,4 @@
-package io.rtincar
+package io.rtincar.accont
 
 class AccountData(
         val email: String,
@@ -16,6 +16,13 @@ class AccountData(
         validatePasswordConfirmation()
     }
 
+    private fun validateEmail() {
+        val emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})\$"
+        if (!validateRegex(email, emailRegex))
+            throw InvalidAccountDataException("Invalid email")
+    }
+
+    private fun validateRegex(str: String, regex: String): Boolean = str.matches(Regex(regex))
 
     private fun validateFirstName() {
         if (firstName.length < 2)
@@ -47,18 +54,11 @@ class AccountData(
 
     private fun passwordHasNotContainOneSpecialCharacter() = !validateRegex(password, "(.*)([!-/:-@]+)(.*)")
 
-    private fun validateEmail() {
-        val emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})\$"
-        if (!validateRegex(email, emailRegex))
-            throw InvalidAccountDataException("Invalid email")
-    }
-
     private fun validatePasswordConfirmation() {
         if (password != passwordConfirmation)
             throw InvalidAccountDataException("Confirmation password doesn't match")
     }
 
-    private fun validateRegex(str: String, regex: String): Boolean = str.matches(Regex(regex))
 
 
 }
