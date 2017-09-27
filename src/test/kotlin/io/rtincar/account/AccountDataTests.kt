@@ -10,11 +10,13 @@ class AccountDataTests {
 
     private val validPassword = "a8Akls@)s"
 
+    private val validation = AccountDataValidation()
+
     @Test
     @DisplayName("Validate wrong format email")
     fun validateWrongEmail() {
         val accountData = AccountData("", "John", "Doe", validPassword, validPassword)
-        assertValidateException(accountData, "Invalid email")
+        isNotValidField(accountData, "Invalid email")
 
     }
 
@@ -22,7 +24,8 @@ class AccountDataTests {
     @DisplayName("Validate right email format")
     fun validateRightEmail() {
         val accountData = AccountData("account@domain.com", "John", "Doe", validPassword, validPassword)
-        accountData.validate()
+        isValidField(accountData)
+
     }
 
     @Test
@@ -30,61 +33,70 @@ class AccountDataTests {
     fun validatePassword() {
 
 
+        val message = "Invalid password"
         Assertions.assertAll("Invalid passwords",
                 Executable {
                     val accountData = createAccountDataWithPassword("aaaaaaa")
-                    assertValidateException(accountData, "Invalid password")
+                    isNotValidField(accountData, message)
+
                 },
                 Executable {
                     val accountData = createAccountDataWithPassword("aaaaaaaa")
-                    assertValidateException(accountData, "Invalid password")
+                    isNotValidField(accountData, message)
                 },
                 Executable {
                     val accountData = createAccountDataWithPassword("aaAaaaaa")
-                    assertValidateException(accountData, "Invalid password")
+                    isNotValidField(accountData, message)
                 },
                 Executable {
                     val accountData = createAccountDataWithPassword("a2Aaaaaa")
-                    assertValidateException(accountData, "Invalid password")
+                    isNotValidField(accountData, message)
                 }
         )
 
         val accountData = createAccountDataWithPassword(validPassword)
-        accountData.validate()
+        isValidField(accountData)
 
+    }
+
+    private fun isValidField(accountData: AccountData) {
+        val result = accountData.isValid(validation)
+        Assertions.assertTrue(result.valid)
     }
 
     @Test
     @DisplayName("Validate password confirmation")
     fun validatePasswordConfirmation() {
         val accountData = AccountData("account@domain.com", "John", "Doe", validPassword, "a8Akls@)k")
-        assertValidateException(accountData, "Confirmation password doesn't match")
+        isNotValidField(accountData, "Confirmation password doesn't match")
     }
 
 
     @Test
     @DisplayName("Validate first name")
     fun validateFirstName() {
-        val accountData = AccountData("account@domain.com", "a", "Doe", validPassword, "a8Akls@)k")
-        assertValidateException(accountData, "First name should contain at least 2 characters")
+        val accountData = AccountData("account@domain.com", "a", "Doe", validPassword, validPassword)
+        isNotValidField(accountData, "First name should contain at least 2 characters")
     }
 
     @Test
     @DisplayName("Validate last name")
     fun validateLastName() {
-        val accountData = AccountData("account@domain.com", "John", "s", validPassword, "a8Akls@)k")
-        assertValidateException(accountData, "Last name should contain at least 2 characters")
+        val accountData = AccountData("account@domain.com", "John", "s", validPassword, validPassword)
+        isNotValidField(accountData, "Last name should contain at least 2 characters")
+    }
+
+    private fun isNotValidField(accountData: AccountData, message: String) {
+        val result = accountData.isValid(validation)
+        Assertions.assertFalse(result.valid)
+        Assertions.assertTrue(result.messages.size == 1)
+        Assertions.assertTrue(result.messages.contains(message))
     }
 
     private fun createAccountDataWithPassword(password: String): AccountData =
             AccountData("account@domain.com", "John", "Doe", password, password)
 
-    private fun assertValidateException(accountData: AccountData, message: String) {
-        val assertThrows= Assertions.assertThrows(InvalidAccountDataException::class.java, {
-            accountData.validate()
-        })
-        Assertions.assertEquals(message, assertThrows.message)
-    }
+
 
 }
 

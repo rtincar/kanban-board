@@ -1,6 +1,6 @@
 package io.rtincar.account
 
-class AccountStoreImpl: AccountStore {
+class MockAccountStore : AccountStore {
 
 
     private val accounts = mutableListOf<Account>()

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("Account Store Tests")
 class AccountStoreTests {
 
-    private val accountStore: AccountStore = AccountStoreImpl()
+    private val accountStore: AccountStore = MockAccountStore()
 
 
     @Test

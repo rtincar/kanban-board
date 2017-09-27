@@ -14,13 +14,13 @@ class AccountManagerTests {
 
     private val validAccountData: AccountData = AccountData("account@domain.com", "John", "Doe", "a8Akls@)s", "a8Akls@)s")
     private val invalidAccountData: AccountData = AccountData("account@domain.com", "John", "Doe", "a8Akls@)s", "a8Akls@)k")
-    private val accountManager: AccountManager = AccountManager(AccountStoreImpl())
+    private val accountManager: AccountManager = AccountManager(MockAccountStore(), AccountDataValidation())
 
     @Test
     @DisplayName("Create new account")
     fun createAccount()  {
         val account = accountManager.createAccount(validAccountData)
-        Assertions.assertAll("Account data",
+        Assertions.assertAll("New account data",
                 Executable { Assertions.assertNotNull(account) },
                 Executable { Assertions.assertEquals(validAccountData.email, account.email) },
                 Executable { Assertions.assertEquals(validAccountData.firstName, account.firstName) },
