@@ -86,6 +86,21 @@ class AccountDataTests {
         isNotValidField(accountData, "Last name should contain at least 2 characters")
     }
 
+    @Test
+    @DisplayName("All fields are invalid")
+    fun allFieldsAreInvalid() {
+        val accountData = AccountData("", "j", "d", "k", "s")
+        val result = accountData.isValid(validation)
+        Assertions.assertFalse(result.valid)
+        Assertions.assertTrue(result.messages.size == 5)
+        Assertions.assertTrue(result.messages.containsAll(setOf(
+                "Invalid password",
+                "Confirmation password doesn't match",
+                "Invalid email",
+                "First name should contain at least 2 characters",
+                "Last name should contain at least 2 characters")))
+    }
+
     private fun isNotValidField(accountData: AccountData, message: String) {
         val result = accountData.isValid(validation)
         Assertions.assertFalse(result.valid)
