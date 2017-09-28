@@ -1,4 +1,4 @@
-package io.rtincar.account
+package io.rtincar.kanbanboard.account
 
 class MockAccountStore : AccountStore {
 
@@ -7,7 +7,7 @@ class MockAccountStore : AccountStore {
 
     override fun save(account: Account) {
         if (exists(account.email)) {
-            throw DuplicateAccountException("Another account exists with the provided email")
+            throw DuplicateAccountException("Another io.rtincar.kanbanboard.account exists with the provided email")
         }
         accounts.add(account)
     }

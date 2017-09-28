@@ -1,2 +1,4 @@
 rootProject.name = 'kanban-board'
+include 'server:domain'
+findProject(':server:domain')?.name = 'domain'
 

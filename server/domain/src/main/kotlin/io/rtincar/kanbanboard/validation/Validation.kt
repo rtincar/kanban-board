@@ -1,4 +1,4 @@
-package io.rtincar.validation
+package io.rtincar.kanbanboard.validation
 
 interface Validation<in T> {
     fun validate(o: T): ValidationResult

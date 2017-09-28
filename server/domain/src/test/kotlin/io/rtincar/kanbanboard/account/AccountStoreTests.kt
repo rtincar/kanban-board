@@ -1,4 +1,4 @@
-package io.rtincar.account
+package io.rtincar.kanbanboard.account
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
@@ -13,14 +13,14 @@ class AccountStoreTests {
     @Test
     @DisplayName("Save Account")
     fun save() {
-        val account = createAccount("account@domain.com")
+        val account = createAccount("io.rtincar.kanbanboard.account@domain.com")
         accountStore.save(account)
         val accountCreated = accountStore.find(account.email)
         Assertions.assertEquals(account, accountCreated)
     }
 
     @Test
-    @DisplayName("Save duplicate account")
+    @DisplayName("Save duplicate io.rtincar.kanbanboard.account")
     fun saveDuplicateAccount() {
         val account = createAccount("account1@domain.com")
         accountStore.save(account)
@@ -31,7 +31,7 @@ class AccountStoreTests {
     }
 
     @Test
-    @DisplayName("Find account that doesn't exist")
+    @DisplayName("Find io.rtincar.kanbanboard.account that doesn't exist")
     fun findNonExistsAccount() {
         val account = accountStore.find("acc@dom.com")
         Assertions.assertNull(account)

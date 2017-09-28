@@ -1,6 +1,6 @@
-package io.rtincar.account
+package io.rtincar.kanbanboard.account
 
-import io.rtincar.validation.Validation
+import io.rtincar.kanbanboard.validation.Validation
 
 class AccountManager(private val accountStore: AccountStore, private val validation: Validation<AccountData>) {
 
@@ -11,7 +11,7 @@ class AccountManager(private val accountStore: AccountStore, private val validat
             accountStore.save(account)
             return account
         } else {
-            throw InvalidAccountDataException("Invalid account data: ${validationResult.messages}")
+            throw InvalidAccountDataException("Invalid io.rtincar.kanbanboard.account data: ${validationResult.messages}")
         }
 
     }

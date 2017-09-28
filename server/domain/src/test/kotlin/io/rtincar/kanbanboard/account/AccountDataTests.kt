@@ -1,4 +1,4 @@
-package io.rtincar.account
+package io.rtincar.kanbanboard.account
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
@@ -23,7 +23,7 @@ class AccountDataTests {
     @Test
     @DisplayName("Validate right email format")
     fun validateRightEmail() {
-        val accountData = AccountData("account@domain.com", "John", "Doe", validPassword, validPassword)
+        val accountData = AccountData("io.rtincar.kanbanboard.account@domain.com", "John", "Doe", validPassword, validPassword)
         isValidField(accountData)
 
     }
@@ -67,7 +67,7 @@ class AccountDataTests {
     @Test
     @DisplayName("Validate password confirmation")
     fun validatePasswordConfirmation() {
-        val accountData = AccountData("account@domain.com", "John", "Doe", validPassword, "a8Akls@)k")
+        val accountData = AccountData("io.rtincar.kanbanboard.account@domain.com", "John", "Doe", validPassword, "a8Akls@)k")
         isNotValidField(accountData, "Confirmation password doesn't match")
     }
 
@@ -75,14 +75,14 @@ class AccountDataTests {
     @Test
     @DisplayName("Validate first name")
     fun validateFirstName() {
-        val accountData = AccountData("account@domain.com", "a", "Doe", validPassword, validPassword)
+        val accountData = AccountData("io.rtincar.kanbanboard.account@domain.com", "a", "Doe", validPassword, validPassword)
         isNotValidField(accountData, "First name should contain at least 2 characters")
     }
 
     @Test
     @DisplayName("Validate last name")
     fun validateLastName() {
-        val accountData = AccountData("account@domain.com", "John", "s", validPassword, validPassword)
+        val accountData = AccountData("io.rtincar.kanbanboard.account@domain.com", "John", "s", validPassword, validPassword)
         isNotValidField(accountData, "Last name should contain at least 2 characters")
     }
 
@@ -109,7 +109,7 @@ class AccountDataTests {
     }
 
     private fun createAccountDataWithPassword(password: String): AccountData =
-            AccountData("account@domain.com", "John", "Doe", password, password)
+            AccountData("io.rtincar.kanbanboard.account@domain.com", "John", "Doe", password, password)
 
 
 

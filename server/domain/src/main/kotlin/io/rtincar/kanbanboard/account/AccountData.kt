@@ -1,7 +1,7 @@
-package io.rtincar.account
+package io.rtincar.kanbanboard.account
 
-import io.rtincar.validation.Validatable
-import io.rtincar.validation.Validation
+import io.rtincar.kanbanboard.validation.Validatable
+import io.rtincar.kanbanboard.validation.Validation
 
 class AccountData(
         val email: String,
