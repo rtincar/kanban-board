@@ -1,0 +1,8 @@
+description = 'Domain and Use Cases'
+jar {
+    baseName = "kanban-board-core"
+}
+dependencies {
+    testCompile libs.unit_tests
+}
+

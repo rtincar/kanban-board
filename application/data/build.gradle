@@ -1,0 +1,5 @@
+description = 'Data access'
+apply plugin: 'kotlin'
+jar {
+    baseName = "kanban-board-data"
+}

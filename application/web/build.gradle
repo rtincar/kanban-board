@@ -1,0 +1,5 @@
+description = 'Web access'
+apply plugin: 'kotlin'
+jar {
+    baseName = "kanban-board-web"
+}

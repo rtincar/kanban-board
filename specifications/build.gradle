@@ -1,0 +1,28 @@
+description = "Acceptance Tests for the BDD cycle (objective: have conversaions and demonstrate requirements)"
+apply plugin: 'groovy'
+
+test {
+
+    // make gradle print the test result for each test in the build (we like to see the acceptance tests running)
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+}
+
+// we want to run the acceptance tests after the unit tests, to follow the testing pyramid
+test.mustRunAfter(
+        ":application:configuration:test",
+        ":application:core:test",
+        ":application:data:test",
+        ":application:web:test"
+)
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    compile project(":application:configuration")
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+}
+
+
+

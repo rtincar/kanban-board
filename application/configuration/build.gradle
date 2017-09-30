@@ -1,0 +1,64 @@
+println "$rootDir/client!!"
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'https://repo.spring.io/libs-milestone'
+        }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M3"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+    }
+}
+
+repositories {
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }
+}
+
+apply plugin: "kotlin-spring"
+apply plugin: 'org.springframework.boot'
+
+
+task buildAngular(type: Exec) {
+    println '==============================================='
+    println '            Building Angular App'
+    println '==============================================='
+    workingDir '../../client'
+    commandLine 'cmd', '/c', 'ng build'
+}
+
+task copyAngular(type: Copy) {
+    dependsOn buildAngular
+    from "$rootDir/client/dist"
+    into "$rootDir/application/web/src/main/resources/static"
+}
+
+processResources {
+    dependsOn copyAngular
+}
+
+// configure spring boot with gradle: end
+
+// generate the main application jar in the "application" folder, to make it easier to find
+bootJar {
+    baseName = 'kanban-board-application'
+    destinationDir = project(":application").getBuildDir()
+}
+
+dependencies {
+    compile project(':application:core')
+    compile project(':application:data')
+    compile project(':application:web')
+
+    compile libs.configuration
+
+    testCompile libs.unit_tests
+}
+
+
+
