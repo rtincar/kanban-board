@@ -3,3 +3,8 @@ apply plugin: 'kotlin'
 jar {
     baseName = "kanban-board-web"
 }
+
+dependencies {
+    compile project(":application:core")
+    compile libs.web
+}

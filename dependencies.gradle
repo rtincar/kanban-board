@@ -3,6 +3,8 @@ ext {
     mockito_version = '2.0.2-beta'
     spring_boot_version = '2.0.0.M4'
     spock_version = '1.1-groovy-2.4'
+    java_version = '1.8'
+    kotlin_version = '1.1.51'
 }
 
 ext.libs = [
@@ -12,13 +14,12 @@ ext.libs = [
         ],
         specifications_tets : [
                 "org.spockframework:spock-core:$spock_version"
-
         ],
         web          : [
-
+            "org.springframework.boot:spring-boot-starter-webflux:$spring_boot_version"
         ],
         configuration: [
-                "org.springframework.boot:spring-boot-starter-web:$spring_boot_version",
+                "org.springframework.boot:spring-boot-starter-webflux:$spring_boot_version",
                 "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
         ],
         data         : [

@@ -4,9 +4,9 @@ buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
-        maven {
-            url 'https://repo.spring.io/libs-milestone'
-        }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M3"
@@ -15,9 +15,8 @@ buildscript {
 }
 
 repositories {
-    maven {
-        url 'https://repo.spring.io/libs-milestone'
-    }
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 apply plugin: "kotlin-spring"
@@ -58,6 +57,9 @@ dependencies {
     compile libs.configuration
 
     testCompile libs.unit_tests
+
+    testCompile("org.springframework.boot:spring-boot-starter-test:$spring_boot_version")
+    testCompile('io.projectreactor:reactor-test:3.1.0.RELEASE')
 }
 
 
