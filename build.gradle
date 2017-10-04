@@ -21,13 +21,9 @@ buildscript {
 
 subprojects {
 
-    apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'kotlin'
     sourceCompatibility = java_version
-
-    //version = version_number
-    //group = group_name
 
     repositories {
         mavenCentral()

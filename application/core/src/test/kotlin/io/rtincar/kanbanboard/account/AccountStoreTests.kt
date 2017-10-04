@@ -16,11 +16,12 @@ class AccountStoreTests {
         val account = createAccount("io.rtincar.kanbanboard.account@domain.com")
         accountStore.save(account)
         val accountCreated = accountStore.find(account.email)
+        Assertions.assertNotNull(accountCreated?.id)
         Assertions.assertEquals(account, accountCreated)
     }
 
     @Test
-    @DisplayName("Save duplicate io.rtincar.kanbanboard.account")
+    @DisplayName("Save duplicate Account")
     fun saveDuplicateAccount() {
         val account = createAccount("account1@domain.com")
         accountStore.save(account)
@@ -31,12 +32,12 @@ class AccountStoreTests {
     }
 
     @Test
-    @DisplayName("Find io.rtincar.kanbanboard.account that doesn't exist")
+    @DisplayName("Find an Account that doesn't exist")
     fun findNonExistsAccount() {
         val account = accountStore.find("acc@dom.com")
         Assertions.assertNull(account)
     }
 
 
-    private fun createAccount(email: String): Account = Account(email, "First name", "Last name", "@sdsA343Ssa")
+    private fun createAccount(email: String): Account = Account(null, email, "First name", "Last name", "@sdsA343Ssa")
 }

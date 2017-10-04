@@ -2,23 +2,39 @@ package io.rtincar.kanbanboard.core
 
 import io.rtincar.kanbanboard.account.*
 import io.rtincar.kanbanboard.validation.Validation
+import spock.lang.Narrative
 import spock.lang.Specification
 
-class CreateAccountSpec extends Specification {
+@Narrative('''
+
+ As User
+ I want to create an account 
+ To access the system
+ 
+''')
+class UserWantsToCreateAnAccountSpec extends Specification {
 
     void "Should create new account"() {
 
         given: "A valid account data"
 
-        AccountStore accountStore = Stub()
-        def accountData = new AccountData(
+        AccountData accountData = new AccountData(
                 "account@domain.com",
                 "First",
                 "Last",
                 "#R2mkdskds",
                 "#R2mkdskds")
+
+        AccountStore accountStore = Stub(AccountStore)
+        accountStore.save(_) >> {
+            def acc = accountData.toAccount()
+            acc.id = UUID.randomUUID().toString()
+            acc
+        }
+
         Validation<AccountData> validation = Stub()
         validation.validate(accountData) >> { new Validation.ValidationResult(true, new HashSet<String>()) }
+
         def accountManager = new AccountManager(accountStore, validation)
 
         when: "Try to create an account"
@@ -31,6 +47,7 @@ class CreateAccountSpec extends Specification {
         account.firstName == accountData.firstName
         account.lastName == accountData.lastName
         account.password.length() > 0
+        account.id != null
         account.active == false
 
 
@@ -42,7 +59,12 @@ class CreateAccountSpec extends Specification {
 
         AccountStore accountStore = Stub()
         def accountManager = new AccountManager(accountStore, new AccountDataValidation())
-        def accountData = new AccountData("89sad@sds.csas", "s", "t", "dssd", "sd")
+        def accountData = new AccountData(
+                "89sad@sds.csas",
+                "s",
+                "t",
+                "dssd",
+                "sd")
 
         when: "Try to create the account"
 
@@ -59,7 +81,12 @@ class CreateAccountSpec extends Specification {
 
         AccountStore accountStore = new MockAccountStore()
         Validation<AccountData> validation = Stub()
-        AccountData accountData = new AccountData("account@domain.com", "First", "Last", "#R2mkdskds", "#R2mkdskds")
+        AccountData accountData = new AccountData(
+                "account@domain.com",
+                "First",
+                "Last",
+                "#R2mkdskds",
+                "#R2mkdskds")
         def accountManager = new AccountManager(accountStore, validation)
         validation.validate(accountData) >> { new Validation.ValidationResult(true, new HashSet<String>()) }
         accountManager.createAccount(accountData)

@@ -12,4 +12,5 @@ class AccountData(
 
     override fun isValid(validation: Validation<AccountData>): Validation.ValidationResult = validation.validate(this)
 
+    fun toAccount() = Account(null, email, firstName, lastName, password)
 }

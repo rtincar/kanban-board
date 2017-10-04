@@ -1,3 +1,9 @@
 package io.rtincar.kanbanboard.account
 
-data class Account(val email: String, val firstName: String, val lastName: String, val password: String, val active: Boolean = false)
+class Account(
+    var id: String?,
+    var email: String,
+    var firstName: String,
+    var lastName: String,
+    var password: String,
+    var active: Boolean = false)

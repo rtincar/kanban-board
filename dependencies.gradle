@@ -23,6 +23,6 @@ ext.libs = [
                 "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
         ],
         data         : [
-
+            "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:$spring_boot_version"
         ]
 ]

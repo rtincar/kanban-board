@@ -6,10 +6,9 @@ class AccountManager(private val accountStore: AccountStore, private val validat
 
     fun createAccount(data: AccountData): Account {
         val validationResult = data.isValid(validation)
+
         if (validationResult.valid) {
-            val account = Account(data.email, data.firstName, data.lastName, data.password)
-            accountStore.save(account)
-            return account
+            return accountStore.save(data.toAccount())
         } else {
             throw InvalidAccountDataException("Invalid io.rtincar.kanbanboard.account data: ${validationResult.messages}")
         }

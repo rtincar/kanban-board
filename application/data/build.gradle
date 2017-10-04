@@ -1,5 +1,10 @@
 description = 'Data access'
-apply plugin: 'kotlin'
+
 jar {
     baseName = "kanban-board-data"
+}
+
+dependencies {
+    compile libs.data
+    testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.0"
 }

@@ -22,6 +22,7 @@ class AccountManagerTests {
         val account = accountManager.createAccount(validAccountData)
         Assertions.assertAll("New account data",
                 Executable { Assertions.assertNotNull(account) },
+                Executable { Assertions.assertNotNull(account.id) },
                 Executable { Assertions.assertEquals(validAccountData.email, account.email) },
                 Executable { Assertions.assertEquals(validAccountData.firstName, account.firstName) },
                 Executable { Assertions.assertEquals(validAccountData.lastName, account.lastName) },
