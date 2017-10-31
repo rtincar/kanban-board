@@ -7,18 +7,13 @@ import org.springframework.web.reactive.function.server.router
 class AccountRouter(private val accountHandler: AccountHandler) {
 
     fun accountRouter() = router {
-        "/api".nest {
+        "/api/v1".nest {
             accept(MediaType.APPLICATION_JSON).nest {
-                GET("/accounts", accountHandler::getAccounts)
                 POST("/account", accountHandler::createAccount)
             }
         }
 
-        GET("/echo", accountHandler::getAccounts)
-
-
-        resources("/**", ClassPathResource("static/") )
-
+        resources("/**", ClassPathResource("static/"))
 
     }
 

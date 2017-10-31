@@ -1,5 +1,5 @@
 description = 'Web access'
-apply plugin: 'kotlin'
+
 jar {
     baseName = "kanban-board-web"
 }
@@ -7,4 +7,5 @@ jar {
 dependencies {
     compile project(":application:core")
     compile libs.web
+    testCompile libs.unit_tests
 }

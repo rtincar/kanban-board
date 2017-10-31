@@ -14,7 +14,11 @@ import spock.lang.Specification
 ''')
 class UserWantsToCreateAnAccountSpec extends Specification {
 
-    void "Should create new account"() {
+    def accountStore = Stub(AccountStore)
+    def validation = Stub(Validation)
+    def accountManager = new AccountManager(accountStore, validation)
+
+    void "Should create new account and receive an activation email"() {
 
         given: "A valid account data"
 
@@ -25,17 +29,17 @@ class UserWantsToCreateAnAccountSpec extends Specification {
                 "#R2mkdskds",
                 "#R2mkdskds")
 
-        AccountStore accountStore = Stub(AccountStore)
+
         accountStore.save(_) >> {
             def acc = accountData.toAccount()
             acc.id = UUID.randomUUID().toString()
             acc
         }
 
-        Validation<AccountData> validation = Stub()
+
         validation.validate(accountData) >> { new Validation.ValidationResult(true, new HashSet<String>()) }
 
-        def accountManager = new AccountManager(accountStore, validation)
+
 
         when: "Try to create an account"
 
@@ -57,14 +61,15 @@ class UserWantsToCreateAnAccountSpec extends Specification {
 
         given: "An invalid account"
 
-        AccountStore accountStore = Stub()
-        def accountManager = new AccountManager(accountStore, new AccountDataValidation())
+
         def accountData = new AccountData(
                 "89sad@sds.csas",
                 "s",
                 "t",
                 "dssd",
                 "sd")
+
+        validation.validate(accountData) >> { new Validation.ValidationResult(false, new HashSet<String>()) }
 
         when: "Try to create the account"
 
@@ -79,22 +84,20 @@ class UserWantsToCreateAnAccountSpec extends Specification {
     void "Should throw DuplicateAccountException when exists an account with same email"() {
         given: "An AccountData with an email that already exists"
 
-        AccountStore accountStore = new MockAccountStore()
-        Validation<AccountData> validation = Stub()
         AccountData accountData = new AccountData(
                 "account@domain.com",
                 "First",
                 "Last",
                 "#R2mkdskds",
                 "#R2mkdskds")
-        def accountManager = new AccountManager(accountStore, validation)
+
         validation.validate(accountData) >> { new Validation.ValidationResult(true, new HashSet<String>()) }
-        accountManager.createAccount(accountData)
+        accountStore.save(_) >> { throw new DuplicateAccountException("") }
 
         when: "Try to create an account"
 
         accountManager.createAccount(accountData)
-        accountManager.createAccount(accountData)
+
 
         then: "Should throw DuplicateAccountException"
 

@@ -36,7 +36,7 @@ class AccountDataValidation: Validation<AccountData> {
 
     private fun validatePassword(accountData: AccountData, messages: MutableSet<String>) {
         if (passwordHasNotMinLength(accountData.password)
-                || passwordHasNotContainOneLowerCaseChar(accountData.password)
+                || passwordHasNotContainOneLowerCaseCharacter(accountData.password)
                 || passwordHasNotContainOneUpperCaseCharacter(accountData.password)
                 || passwordHasNotContainOneDigit(accountData.password)
                 || passwordHasNotContainOneSpecialCharacter(accountData.password))
@@ -46,7 +46,7 @@ class AccountDataValidation: Validation<AccountData> {
 
     private fun passwordHasNotMinLength(password: String) = password.length < 8
 
-    private fun passwordHasNotContainOneLowerCaseChar(password: String) = !validateRegex(password, "(.*)([a-z]+)(.*)")
+    private fun passwordHasNotContainOneLowerCaseCharacter(password: String) = !validateRegex(password, "(.*)([a-z]+)(.*)")
 
     private fun passwordHasNotContainOneUpperCaseCharacter(password: String) = !validateRegex(password, "(.*)([A-Z]+)(.*)")
 

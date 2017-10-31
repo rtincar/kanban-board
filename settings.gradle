@@ -1,4 +1,4 @@
 rootProject.name = 'kanban-board'
 include 'application:core', 'application:configuration', 'application:data', 'application:web', 'specifications'
-
+include 'integration-tests'
 

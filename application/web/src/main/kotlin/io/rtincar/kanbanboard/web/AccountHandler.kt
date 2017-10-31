@@ -11,11 +11,11 @@ import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
 
 class AccountHandler(private val accountManager: AccountManager) {
+
     fun createAccount(req: ServerRequest): Mono<ServerResponse> {
         val accountData = AccountData("domain@account.com", "First name", "Last name", "4#Mooooo", "4#Mooooo")
         val account = accountManager.createAccount(accountData)
         return ok().body(ObjectMapper().writeValueAsString(account).toMono())
     }
 
-    fun getAccounts(req: ServerRequest) = ok().body(Mono.just("{\"status\" : \"ok\"}"))
 }

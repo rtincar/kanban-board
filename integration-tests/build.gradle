@@ -1,0 +1,24 @@
+description = "Integration Tests for checking the entrypoints and dataproviders"
+
+test {
+
+    // make gradle print the test result for each test in the build (we like to see the acceptance tests running)
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+}
+
+test.mustRunAfter(":specifications:test")
+
+apply plugin: 'groovy'
+
+
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+
+    compile project(":application:configuration")
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+    testCompile project(':specifications')
+}
