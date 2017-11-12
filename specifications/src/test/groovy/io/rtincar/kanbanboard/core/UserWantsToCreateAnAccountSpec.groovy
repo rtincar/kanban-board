@@ -1,17 +1,22 @@
 package io.rtincar.kanbanboard.core
 
 import io.rtincar.kanbanboard.account.*
+import io.rtincar.kanbanboard.configuration.AccountConfiguration
 import io.rtincar.kanbanboard.validation.Validation
+import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Narrative
 import spock.lang.Specification
+import spock.lang.Title
 
+@Title('An user wants to create an account')
 @Narrative('''
-
- As User
- I want to create an account 
- To access the system
+ 
+ In order to access the system
+ As a Anonymous user 
+ I want to create an account
  
 ''')
+@SpringBootTest(classes = [AccountConfiguration])
 class UserWantsToCreateAnAccountSpec extends Specification {
 
     def accountStore = Stub(AccountStore)
