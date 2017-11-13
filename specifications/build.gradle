@@ -46,6 +46,9 @@ test.mustRunAfter(
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.12'
     compile project(":application:configuration")
+    // TODO: Puede que el problema sea la version 9 de java. Hacer que gradlew ejecute la version 1.8
+    // Con la siguiente linea se resuelve el problema de depedencias de manera temporal
+    testCompile files('../application/configuration/out/production/classes')
 
     testCompile "org.spockframework:spock-core:$spock_version"
     testCompile "org.spockframework:spock-spring:$spock_version"
