@@ -72,7 +72,7 @@ class UserWantsToCreateAnAccountSpec extends Specification {
 
         when: "Try to create the account"
 
-        accountManager.createAccount(accountData)
+
 
         then: "Should throw InvalidAccountException"
 
