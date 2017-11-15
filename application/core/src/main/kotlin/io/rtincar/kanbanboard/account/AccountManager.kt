@@ -10,7 +10,7 @@ class AccountManager(private val accountStore: AccountStore, private val validat
         if (validationResult.valid) {
             return accountStore.save(data.toAccount())
         } else {
-            throw InvalidAccountDataException("Invalid io.rtincar.kanbanboard.account data: ${validationResult.messages}")
+            throw InvalidAccountDataException("Invalid account data: ${validationResult.messages}")
         }
 
     }

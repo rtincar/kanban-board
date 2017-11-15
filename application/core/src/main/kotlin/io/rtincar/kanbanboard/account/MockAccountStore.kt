@@ -9,7 +9,7 @@ open class MockAccountStore : AccountStore {
 
     override fun save(account: Account): Account {
         if (exists(account.email)) {
-            throw DuplicateAccountException("Another io.rtincar.kanbanboard.account exists with the provided email")
+            throw DuplicateAccountException("Another account exists with the provided email")
         }
         account.id = UUID.randomUUID().toString()
         accounts.add(account)
