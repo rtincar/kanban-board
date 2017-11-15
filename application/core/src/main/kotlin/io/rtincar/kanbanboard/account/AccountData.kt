@@ -13,4 +13,14 @@ class AccountData(
     override fun isValid(validation: Validation<AccountData>): Validation.ValidationResult = validation.validate(this)
 
     fun toAccount() = Account(null, email, firstName, lastName, password)
+
+    override fun toString(): String = """
+        AccountData(email='$email',
+        firstName='$firstName',
+        lastName='$lastName',
+        password='$password',
+        passwordConfirmation='$passwordConfirmation')
+        """.trimIndent()
+
+
 }

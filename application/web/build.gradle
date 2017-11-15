@@ -1,11 +1,31 @@
 description = 'Web access'
 
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+    }
+}
+
+apply plugin: "kotlin-spring"
+
 jar {
     baseName = "kanban-board-web"
 }
 
 dependencies {
     compile project(":application:core")
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile libs.web
-    testCompile libs.unit_tests
+
+    testCompile project(":application:configuration")
+    testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
+    testCompile 'io.projectreactor:reactor-test:3.1.0.RELEASE'
+
 }

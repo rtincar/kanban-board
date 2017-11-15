@@ -4,7 +4,8 @@ ext {
     spring_boot_version = '2.0.0.M6'
     spock_version = '1.1-groovy-2.4'
     java_version = '1.8'
-    kotlin_version = '1.1.51'
+    kotlin_version = '1.1.60'
+    spring_version = '5.0.1.RELEASE'
 }
 
 ext.libs = [
