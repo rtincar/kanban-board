@@ -26,20 +26,6 @@ class AccountHandler(private val accountManager: AccountManager) {
         } catch (e: Exception) {
             badRequest().body(ObjectMapper().writeValueAsString(ResponseData("error", e.message)).toMono())
         }
-
-    }
-
-    // TODO: Refaaaactooooooor. Estudiar BodyExtractor
-    private fun getAccountData(req: ServerRequest): AccountData {
-        val valueMap = req.body(BodyExtractors.toFormData()).block()
-         return AccountData(
-                valueMap["email"]?.get(0) ?: "",
-                valueMap["firstName"]?.get(0) ?: "",
-                valueMap["lastName"]?.get(0) ?: "",
-                valueMap["password"]?.get(0) ?: "",
-                valueMap["passwordConfirmation"]?.get(0) ?: ""
-
-        )
     }
 
 }
