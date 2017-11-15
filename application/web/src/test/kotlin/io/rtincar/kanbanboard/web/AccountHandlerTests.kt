@@ -47,8 +47,7 @@ class AccountHandlerTests {
 
         """
 
-        webTestClient
-                .post()
+        webTestClient.post()
                 .uri("/api/v1/account")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromObject(accountJson))

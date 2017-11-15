@@ -4,14 +4,14 @@ import groovy.json.JsonOutput
 import io.rtincar.kanbanboard.configuration.AccountConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.web.reactive.config.EnableWebFlux
 import org.springframework.web.reactive.function.BodyInserters
-import spock.lang.*
+import spock.lang.Narrative
+import spock.lang.Specification
+import spock.lang.Title
+import spock.lang.Unroll
 
 @Title('An user wants to create an account')
 @Narrative('''
@@ -35,8 +35,8 @@ class UserWantsToCreateAnAccountSpec extends Specification {
                 email: 'account@domain.com',
                 firstName: 'John',
                 lastName: 'Doe',
-                password: 'K21$kljo',
-                confirmationPassword: 'K21$kljo'
+                password: 'K21!kljo',
+                passwordConfirmation: 'K21!kljo'
         ])
 
         when: "Try to create an account"
@@ -59,7 +59,7 @@ class UserWantsToCreateAnAccountSpec extends Specification {
                 firstName: firstName,
                 lastName: lastName,
                 password: password,
-                confirmationPassword: confirmationPassword
+                confirmationPassword: passwordConfirmation
         ])
 
 
@@ -73,7 +73,7 @@ class UserWantsToCreateAnAccountSpec extends Specification {
         exchange.expectBody().jsonPath('$.status').isEqualTo('error')
 
         where:
-        email                | firstName | lastName | password   | confirmationPassword | reason
+        email                | firstName | lastName | password   | passwordConfirmation | reason
         ''                   | ''        | ''       | ''         | ''                   | 'All values empties'
         'account@domain'     | 'John'    | 'Doe'    | 'K21$kljo' | 'K21$kljo'           | 'Invalid email'
         'account@domain.com' | ''        | 'Doe'    | 'K21$klyy' | 'K21$klyy'           | 'First name is empty'

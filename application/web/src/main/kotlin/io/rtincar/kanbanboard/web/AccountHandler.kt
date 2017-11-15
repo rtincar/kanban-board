@@ -19,12 +19,11 @@ class AccountHandler(private val accountManager: AccountManager) {
 
     fun createAccount(req: ServerRequest): Mono<ServerResponse> {
         return try {
-            val accountData = req.bodyToMono(NewAccount::class.java).block().toAccountData()
+            val accountData = req.bodyToMono(AccountData::class.java).block()
             accountManager.createAccount(accountData)
             status(HttpStatus.CREATED).body(ObjectMapper().writeValueAsString(ResponseData("ok", null)).toMono())
             // TODO: Ver documentacion de gestion de excepciones en WebFlux
         } catch (e: Exception) {
-            e.printStackTrace(System.out)
             badRequest().body(ObjectMapper().writeValueAsString(ResponseData("error", e.message)).toMono())
         }
 
