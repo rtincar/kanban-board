@@ -3,10 +3,13 @@ package io.rtincar.kanbanboard.core
 import groovy.json.JsonOutput
 import io.rtincar.kanbanboard.configuration.AccountConfiguration
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.web.reactive.config.EnableWebFlux
 import org.springframework.web.reactive.function.BodyInserters
 import spock.lang.*
 
@@ -18,18 +21,12 @@ import spock.lang.*
  I want to create an account
  
 ''')
-@SpringBootTest(classes = [AccountConfiguration])
+@ContextConfiguration(classes = [AccountConfiguration])
+@WebFluxTest
 class UserWantsToCreateAnAccountSpec extends Specification {
 
     @Autowired
-    ApplicationContext context
-
-    @Shared
     WebTestClient testClient
-
-    def setup() {
-        testClient = WebTestClient.bindToApplicationContext(context).build()
-    }
 
     void "Should create new account and receive an activation email"() {
 
