@@ -3,7 +3,7 @@ package io.rtincar.kanbanboard.account
 import io.rtincar.kanbanboard.validation.Validatable
 import io.rtincar.kanbanboard.validation.Validation
 
-class AccountData(
+data class AccountData(
         val email: String,
         val firstName: String,
         val lastName: String,
@@ -13,14 +13,5 @@ class AccountData(
     override fun isValid(validation: Validation<AccountData>): Validation.ValidationResult = validation.validate(this)
 
     fun toAccount() = Account(null, email, firstName, lastName, password)
-
-    override fun toString(): String = """
-        AccountData(email='$email',
-        firstName='$firstName',
-        lastName='$lastName',
-        password='$password',
-        passwordConfirmation='$passwordConfirmation')
-        """.trimIndent()
-
 
 }
