@@ -1,10 +1,17 @@
 package io.rtincar.kanbanboard.web
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import io.rtincar.kanbanboard.account.AccountData
+import io.rtincar.kanbanboard.account.IAccountManager
+import io.rtincar.kanbanboard.account.InvalidAccountDataException
 import io.rtincar.kanbanboard.configuration.AccountConfiguration
+import io.rtincar.kanbanboard.validation.Validation
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
@@ -17,50 +24,76 @@ import org.springframework.web.reactive.function.BodyInserters
 @WebFluxTest
 class AccountHandlerTests {
 
+    private fun Any.toJson(): String = ObjectMapper().writeValueAsString(this)
 
-    /**
-     * TODO: Crear mock de AccountManager
-     *
-     * El test debe estar orientado a la colaboración de
-     * AccountHandler con AccountManager. Debo investigar
-     * cómo generar un mock de AccountHandler y probar
-     * las llamadas
-     *
-     *
-      */
-
+    @MockBean
+    private lateinit var accountManager: IAccountManager
 
     @Autowired
-    lateinit var webTestClient: WebTestClient
+    private lateinit var webTestClient: WebTestClient
 
-    @Test
-    fun `Should return code 201 and JSON with status=ok`() {
+    private val EMPTY_ACCOUNT = AccountData("", "", "", "", "")
 
-        val accountJson = """
-        {
+    private val accountJson = """
+
+    {
         "email" : "account@domain.com",
         "firstName" : "John",
         "lastName" : "Doe",
         "password" : "Kl7!opop",
         "passwordConfirmation" : "Kl7!opop"
-        }
+    }
 
-        """
+    """
 
-        webTestClient.post()
-                .uri("/api/v1/account")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromObject(accountJson))
-                .exchange()
+    @Test
+    fun `Should return code 201 and JSON with status=ok when account is created`() {
+
+        postAccount(accountJson)
                 .expectStatus().isCreated
                 .expectBody().jsonPath("$.status").isEqualTo("ok")
     }
 
-    fun `Should create correct AccountData from received JSON`() {
+    @Test
+    fun `Should return code 400 and JSON with status=error when it doesn't get all account fields`() {
 
+        val givenAPartialAccountJson = """
+
+        {
+            "email" : "account@domain.com",
+            "firstName" : "John",
+            "password" : "Kl7!opop",
+            "passwordConfirmation" : "Kl7!opop"
+        }
+
+        """
+
+        postAccount(givenAPartialAccountJson)
+                .expectStatus().isBadRequest
+                .expectBody()
+                .jsonPath("$.status").isEqualTo("error")
+                .jsonPath("$.message").isNotEmpty
     }
 
-    fun `Should return error 400 when AccountManager throws an exception`() {
 
+    @Test
+    fun `Should return code 400 and JSON with status=error when AccountManager throws an exception`() {
+
+        `when`(accountManager.createAccount(EMPTY_ACCOUNT))
+                .thenThrow(RuntimeException("Validation exception"))
+
+        postAccount(EMPTY_ACCOUNT.toJson())
+                .expectStatus().isBadRequest
+                .expectBody()
+                    .jsonPath("$.status").isEqualTo("error")
+                    .jsonPath("$.message").isNotEmpty
+    }
+
+    private fun postAccount(accountData: String): WebTestClient.ResponseSpec {
+        return webTestClient.post()
+                .uri("/api/v1/account")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(accountData))
+                .exchange()
     }
 }

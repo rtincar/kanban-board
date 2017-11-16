@@ -14,7 +14,7 @@ class AccountManagerTests {
 
     private val validAccountData: AccountData = AccountData("io.rtincar.kanbanboard.account@domain.com", "John", "Doe", "a8Akls@)s", "a8Akls@)s")
     private val invalidAccountData: AccountData = AccountData("io.rtincar.kanbanboard.account@domain.com", "John", "Doe", "a8Akls@)s", "a8Akls@)k")
-    private val accountManager: AccountManager = AccountManager(MockAccountStore(), AccountDataValidation())
+    private val accountManager: IAccountManager = AccountManager(MockAccountStore(), AccountDataValidation())
 
     @Test
     @DisplayName("Create new account")
