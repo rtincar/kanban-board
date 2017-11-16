@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.BodyInserters
+import java.lang.RuntimeException
 
 
 @RunWith(SpringRunner::class)
@@ -78,9 +79,10 @@ class AccountHandlerTests {
 
     @Test
     fun `Should return code 400 and JSON with status=error when AccountManager throws an exception`() {
+        val e = RuntimeException("ValidationException")
 
         `when`(accountManager.createAccount(EMPTY_ACCOUNT))
-                .thenThrow(RuntimeException("Validation exception"))
+                .thenThrow(e)
 
         postAccount(EMPTY_ACCOUNT.toJson())
                 .expectStatus().isBadRequest

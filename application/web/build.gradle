@@ -13,6 +13,15 @@ buildscript {
     }
 }
 
+test {
+
+    // make gradle print the test result for each test in the build (we like to see the acceptance tests running)
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+}
+
 apply plugin: "kotlin-spring"
 
 jar {
@@ -23,7 +32,8 @@ dependencies {
     compile project(":application:core")
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile libs.web
-
+    // TODO: Resolver problema de dependencias
+    testCompile files('../configuration/out/production/classes')
     testCompile project(":application:configuration")
     testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
     testCompile 'io.projectreactor:reactor-test:3.1.0.RELEASE'
