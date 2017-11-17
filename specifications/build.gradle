@@ -45,8 +45,10 @@ test.mustRunAfter(
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.12'
+
+    //testRuntime project(":application:configuration")
     compile project(":application:configuration")
-    // Con la siguiente linea se resuelve el problema de depedencias de manera temporal
+    //TODO: Con la siguiente linea se resuelve el problema de depedencias de manera temporal
     testCompile files('../application/configuration/out/production/classes')
 
     testCompile "org.spockframework:spock-core:$spock_version"

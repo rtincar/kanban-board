@@ -1,3 +1,3 @@
 package io.rtincar.kanbanboard.web
 
-data class ResponseData(val status: String, val message: String?)
+data class ResponseData(val status: String, val message: String?, val data: Any?)
