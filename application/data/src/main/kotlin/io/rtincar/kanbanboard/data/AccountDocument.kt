@@ -1,12 +1,13 @@
 package io.rtincar.kanbanboard.data
 
 import io.rtincar.kanbanboard.account.Account
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
-@Document
+@Document(collection = "accounts")
 data class AccountDocument(
 
-        var id: String?,
+        @Id var id: String?,
         var email: String,
         var firstName: String,
         var lastName: String,

@@ -2,15 +2,19 @@ package io.rtincar.kanbanboard.data
 
 import io.rtincar.kanbanboard.account.Account
 import io.rtincar.kanbanboard.account.AccountStore
-import org.junit.Assert.*
+import io.rtincar.kanbanboard.account.DuplicateAccountException
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-@ContextConfiguration(classes = arrayOf(TestDataConfiguration::class))
+@ContextConfiguration(classes = arrayOf(DataConfiguration::class))
+@SpringBootTest
 class AccountStoreTests {
 
     @Autowired
@@ -28,7 +32,14 @@ class AccountStoreTests {
         assertTrue("Account.id shouldn't be empty", id.isNotEmpty())
     }
 
-    fun `Should throw DuplicateAccountData if there is another account with same email`() {
+    @Test
+    fun `Should find an account by email`() {
+        val exists = accountStore.exists("account@domain.com")
+        assertTrue("Should exist", exists)
+    }
 
+    @Test(expected = DuplicateAccountException::class)
+    fun `Should throw DuplicateAccountData if there is another account with same email`() {
+        accountStore.save(Account(null, "account@domain.com", "John", "Doe", "password"))
     }
 }

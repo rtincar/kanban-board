@@ -4,3 +4,4 @@ server:
 loggin:
   level:
      io.rtincar.kanbanboard: ERROR
+     org.springframework.data.mongodb: DEBUG
