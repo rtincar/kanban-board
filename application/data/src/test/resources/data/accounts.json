@@ -1,0 +1,23 @@
+[
+  {
+    "email" : "account1@domain.com",
+    "firstName" : "John",
+    "lastName" : "Doe",
+    "password" : "Kl7!opop",
+    "active": false
+  },
+  {
+    "email" : "account2@domain.com",
+    "firstName" : "Jane",
+    "lastName" : "Doe",
+    "password" : "Kl7!opop",
+    "active": false
+  },
+  {
+    "email" : "account3@domain.com",
+    "firstName" : "Mike",
+    "lastName" : "Doe",
+    "password" : "Kl7!opop",
+    "active": false
+  }
+]

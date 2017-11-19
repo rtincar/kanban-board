@@ -33,7 +33,9 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile libs.data
 
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.1'
 
-    testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
+    compile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
     testRuntime "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.0"
 }
