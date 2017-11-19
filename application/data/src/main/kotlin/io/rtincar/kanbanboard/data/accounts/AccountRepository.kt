@@ -1,4 +1,4 @@
-package io.rtincar.kanbanboard.data
+package io.rtincar.kanbanboard.data.accounts
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.stereotype.Repository

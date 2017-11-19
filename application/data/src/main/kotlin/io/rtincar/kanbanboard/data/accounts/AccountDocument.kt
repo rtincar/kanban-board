@@ -1,4 +1,4 @@
-package io.rtincar.kanbanboard.data
+package io.rtincar.kanbanboard.data.accounts
 
 import io.rtincar.kanbanboard.account.Account
 import org.springframework.data.annotation.Id

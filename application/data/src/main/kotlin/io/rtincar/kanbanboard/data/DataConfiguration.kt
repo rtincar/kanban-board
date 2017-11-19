@@ -3,6 +3,8 @@ package io.rtincar.kanbanboard.data
 import com.mongodb.reactivestreams.client.MongoClient
 import com.mongodb.reactivestreams.client.MongoClients
 import io.rtincar.kanbanboard.account.AccountStore
+import io.rtincar.kanbanboard.data.accounts.AccountRepository
+import io.rtincar.kanbanboard.data.accounts.MongoAccountStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,7 +12,7 @@ import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguratio
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories
 
 @Configuration
-@EnableReactiveMongoRepositories("io.rtincar.kanbanboard.data")
+@EnableReactiveMongoRepositories
 class DataConfiguration: AbstractReactiveMongoConfiguration() {
 
     override fun reactiveMongoClient(): MongoClient = MongoClients.create("mongodb://127.0.0.1:27017")
