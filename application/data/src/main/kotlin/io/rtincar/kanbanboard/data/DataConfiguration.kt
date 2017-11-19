@@ -6,16 +6,32 @@ import io.rtincar.kanbanboard.account.AccountStore
 import io.rtincar.kanbanboard.data.accounts.AccountRepository
 import io.rtincar.kanbanboard.data.accounts.MongoAccountStore
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.AutoConfigureAfter
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.DependsOn
+import org.springframework.core.env.Environment
 import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories
 
 @Configuration
 @EnableReactiveMongoRepositories
+@AutoConfigureAfter(EmbeddedMongoAutoConfiguration::class)
+@EnableAutoConfiguration
 class DataConfiguration: AbstractReactiveMongoConfiguration() {
 
-    override fun reactiveMongoClient(): MongoClient = MongoClients.create("mongodb://127.0.0.1:27017")
+    @Autowired
+    lateinit var env: Environment
+
+    @Bean
+    @DependsOn("embeddedMongoServer")
+    override fun reactiveMongoClient(): MongoClient {
+        // la propiedad local.mongo.port procede de EmbeddedMongoAutoConfiguration
+        val port = env.getProperty("local.mongo.port", Int::class.java)
+        return MongoClients.create("mongodb://localhost:$port")
+    }
 
     override fun getDatabaseName(): String = "test"
 
